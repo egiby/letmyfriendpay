@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Wallet(models.Model):
-    time_of_creation = models.DateTimeField(auto_now_add=True, null=True)
+    time_of_creation = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='created_wallets')
     description = models.TextField(max_length=1024, blank=True, null=True)
 

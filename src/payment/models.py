@@ -22,3 +22,4 @@ class Transaction(models.Model):
     payment = models.ForeignKey(Payment)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     difference = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0.00)
+    time = models.DateTimeField(auto_now_add=True)

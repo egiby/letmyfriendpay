@@ -6,5 +6,4 @@ from .models import Wallet
 
 class WalletView(ListView):
     model = Wallet
-    template_name = 'wallet/wallet.html'
-    data = Wallet.members.get()
+    template_name = 'wallet/wallets.html'
