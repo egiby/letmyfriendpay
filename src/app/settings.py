@@ -123,5 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/egiby/.letmyfriendpay/collected_static/'
+MEDIA_ROOT = '/home/egiby/.letmyfriendpay/media/'
 STATICFILES_DIRS = ('/home/egiby/.letmyfriendpay/src/static/', )

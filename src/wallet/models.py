@@ -11,6 +11,9 @@ class Wallet(models.Model):
                                      through_fields=('wallet', 'member'),
                                      related_name='my_wallets')
 
+    def __str__(self):
+        return self.description
+
 
 class Balance(models.Model):
     wallet = models.ForeignKey(Wallet)

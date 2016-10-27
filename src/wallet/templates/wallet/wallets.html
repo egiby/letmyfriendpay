@@ -1,1 +1,9 @@
 {% extends "base.html" %}
+{% block title %}Все кошельки{% endblock %}
+
+{% block content %}
+    {% for wallet in wallet_list %}
+        {{ wallet.author }} <br>
+        {{ wallet.description }} <br><br>
+    {% endfor %}
+{% endblock %}
