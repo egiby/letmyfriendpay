@@ -6,5 +6,5 @@ from django.contrib import admin
 from .views import WalletView
 
 urlpatterns = [
-    url(r'list', WalletView.as_view()),
+    url(r'wallet_list', WalletView.as_view()),
 ]

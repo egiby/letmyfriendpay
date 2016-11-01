@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    {% if user.is_anonymous %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Register now">
+        </form>
+    {% else %}
+        <h1>Вы уже авторизованы</h1>
+        <form method="get" action="{% url 'users:logout' %}">
+            <input type="submit" value="Logout">
+        </form>
+    {% endif %}
+{% endblock %}
