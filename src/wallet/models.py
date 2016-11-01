@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Wallet(models.Model):
+    # slug = models.IntegerField(primary_key=True)
     time_of_creation = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='created_wallets')
     description = models.TextField(max_length=1024, blank=True, null=True)
@@ -13,6 +14,9 @@ class Wallet(models.Model):
 
     def __str__(self):
         return self.description
+
+    def get_balance(self, member):
+        return Balance.objects.get(wallet=self, member=member)
 
 
 class Balance(models.Model):

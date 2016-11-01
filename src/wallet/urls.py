@@ -1,10 +1,8 @@
-from django.conf import settings
-from django.conf.urls import url, include
-from django.conf.urls.static import static
-from django.contrib import admin
+from django.conf.urls import url
 
-from .views import WalletView
+from .views import WalletListView, WalletView
 
 urlpatterns = [
-    url(r'wallet_list', WalletView.as_view()),
+    url(r'wallet_list', WalletListView.as_view()),
+    url(r'^(?P<pk>\d+)/$', WalletView.as_view())
 ]

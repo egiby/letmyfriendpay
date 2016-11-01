@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import login, logout
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 from django.conf import settings
 
@@ -16,7 +17,7 @@ urlpatterns = [
     url('^register/', CreateView.as_view(
         template_name='authorization/register.html',
         form_class=CustomUserCreationForm,
-        success_url=settings.LOGIN_URL
+        success_url=reverse_lazy(settings.LOGIN_URL)
     )),
     url('', include('django.contrib.auth.urls')),
 ]
