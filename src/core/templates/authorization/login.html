@@ -1,19 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}login{% endblock %}
+{% block title %}Login{% endblock %}
+
+{% block meta %}
+    {% if user.is_authenticated %}
+        <meta http-equiv="refresh" content="1; URL='{% url 'users:user_profile' %}'" />
+    {% endif %}
+    {# Да, это костыль #}
+    {# Не обращайте внимания #}
+{% endblock %}
 
 {% block content %}
     {% if user.is_authenticated %}
         <h1>Вы уже авторизованы</h1>
-        <form method="get" action="{% url 'users:logout' %}">
-            <input type="submit" value="Logout">
-        </form>
+{#        <form method="get" action="{% url 'users:logout' %}">#}
+{#            <input type="submit" value="Logout">#}
+{#        </form>#}
     {% else %}
         <form method="post">
             {% csrf_token %}
             {{ form }}
-        <input type="submit" value="Log in">
-        <input type="hidden" name="next" value="{{ next }}" />
+            <input type="submit" value="Log in">
+            <input type="hidden" name="next" value="{{ next }}" />
         </form>
     {% endif %}
 {% endblock %}

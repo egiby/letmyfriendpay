@@ -7,7 +7,7 @@
     <h3>Creator</h3> {{ wallet.author }}
     <h3>Description</h3> {{ wallet.description }}
     <h3>Members</h3>
-    {%  for balance in wallet.balance_set.all %}
+    {% for balance in wallet.balance_set.all %}
         <li>{{ balance.member }}, balance={{ balance.member_balance }} </li>
     {% endfor %}
     <br><br>

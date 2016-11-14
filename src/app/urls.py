@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^wallets/', include('wallet.urls', namespace='wallets')),
     url(r'^users/', include('core.urls', namespace='users')),
 ] \
-              # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
-              # static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
+              static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

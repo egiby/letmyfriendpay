@@ -33,8 +33,8 @@ AUTH_USER_MODEL = 'core.User'
 
 # URLs for login and logout
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'users:user_list'
-# LOGOUT_REDIRECT_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'users:user_profile'
+LOGOUT_REDIRECT_URL = 'users:login'
 
 # Application definition
 

@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <title>{% block title %}{% endblock %}</title><br>
+    {% block meta %}{% endblock %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="script" href="{% static 'bootstrap/js/bootstrap.min.js' %}">
 </head>
 
 
