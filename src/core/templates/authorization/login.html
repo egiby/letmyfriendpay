@@ -11,17 +11,26 @@
 {% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <h1>Вы уже авторизованы</h1>
-{#        <form method="get" action="{% url 'users:logout' %}">#}
-{#            <input type="submit" value="Logout">#}
-{#        </form>#}
-    {% else %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Log in">
-            <input type="hidden" name="next" value="{{ next }}" />
-        </form>
+    {% if not user.is_authenticated %}
+        <div class="container">
+            {% load widget_tweaks %}
+            <form class="form-signin" role="form" method="post">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                {% csrf_token %}
+
+                <p>{{ form.username|add_class:"form-control"|attr:"placeholder:Username"|attr:"required"|attr:"autofocus" }}</p>
+                <p>{{ form.password|add_class:"form-control"|attr:"placeholder:Password"|attr:"required" }}</p>
+                <p><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></p>
+                <input type="hidden" name="next" value="{{ next }}" />
+
+                <p>
+                    <a href="{% url 'users:register' %}">
+                        <button type="button" class="btn btn-lg btn-primary btn-block">
+                            Sign up
+                        </button>
+                    </a>
+                </p>
+            </form>
+        </div>
     {% endif %}
 {% endblock %}

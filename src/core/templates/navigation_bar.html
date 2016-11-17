@@ -1,0 +1,32 @@
+{% block header %}
+    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+        <a class="navbar-brand" href="{% url 'users:user_profile' %}">Letmyfriendpay</a>
+        {% if user.is_authenticated %}
+            <ul class="nav navbar-nav">
+                {% if '/profile' in request.get_full_path %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'users:user_profile' %}">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:user_profile' %}">Home</a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item float-xs-right">
+                    <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+                </li>
+
+                {% if '/edit_profile' in request.get_full_path %}
+                    <li class="nav-item float-xs-right active">
+                        <a class="nav-link" href="{% url 'users:edit_user' %}">Edit user<span class="sr-only">(current)</span></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item float-xs-right">
+                        <a class="nav-link" href="{% url 'users:edit_user' %}">Edit user</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </nav>
+{% endblock %}

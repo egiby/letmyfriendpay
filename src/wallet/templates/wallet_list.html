@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Все кошельки{% endblock %}
+
+{% block content %}
+    <h1>Wallets</h1>
+    {% for wallet in wallet_list %}
+        {% include "wallet.html" %}
+    {% endfor %}
+{% endblock %}

@@ -3,15 +3,32 @@
 <head>
     <title>{% block title %}{% endblock %}</title><br>
     {% block meta %}{% endblock %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <link rel="script" href="{% static 'bootstrap/js/bootstrap.min.js' %}">
+
+    {% block static %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/theme.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    {% endblock %}
 </head>
 
 
 <body>
-    <div>
-        {% block content %}{% endblock %}
+<div>
+    <div class="container-fluid">
+        <div class="row">
+            {% block header %}
+                {% include "navigation_bar.html" %}
+            {% endblock %}
+        </div>
+
+        <div class="row">
+            <div class="main">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
     </div>
+</div>
+{% load static %}
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 </body>
 </html>

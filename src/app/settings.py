@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'core',
     'wallet',
     'payment',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

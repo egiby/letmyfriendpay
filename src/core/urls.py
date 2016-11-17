@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^user_list', UserListView.as_view(), name='user_list'),
     url(r'^login/', login, {'template_name': 'authorization/login.html'}, name="login"),
     url(r'^logout/', logout, {'template_name': 'authorization/logout.html'}, name="logout"),
-    url('^register/', UserCreateView.as_view()),
+    url('^register/', UserCreateView.as_view(), name="register"),
     url(r'^profile', login_required(UserView.as_view(), login_url=settings.LOGIN_URL), name="user_profile"),
     url(r'^edit_profile/', login_required(UserUpdateView.as_view(), login_url=settings.LOGIN_URL), name="edit_user"),
 ]

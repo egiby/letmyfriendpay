@@ -2,36 +2,37 @@
 
 {% block title %}Edit profile{% endblock %}
 
-{% block meta %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-{% endblock %}
-
 {% block content %}
-    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-        <ul class="nav navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'users:user_profile' %}">Home</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'users:edit_user' %}">Edit user<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
-            </li>
-        </ul>
-    </nav>
-
     <div class="container">
-        <div class="main">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.first_name }}
-                {{ form.last_name }}
-                {{ form.email }}
-                {{ form.avatar }}
-                <input type="submit" value="Save">
-            </form>
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {% load widget_tweaks %}
+
+                    <div class="form-group">
+                        <label for="Firstname">First name</label>
+                        {{ form.first_name|add_class:"form-control"|attr:"placeholder:First name"|attr:"id:Firstname" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Lastname">Last name</label>
+                        {{ form.last_name|add_class:"form-control"|attr:"placeholder:Last name"|attr:"id:Lastname" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="EmailAddress">Email address</label>
+                        {{ form.email|add_class:"form-control"|attr:"placeholder:Email address"|attr:"id:EmailAddress" }}
+                    </div>
+
+{#                    <div class="form-group">#}
+{#                        <label for="Avatar">Avatar</label>#}
+{#                        {{ form.avatar|add_class:"form-control-file"|attr:"id:Avatar" }}#}
+{#                    </div>#}
+
+                    <input type="submit" value="Save">
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

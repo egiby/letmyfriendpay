@@ -9,6 +9,8 @@ from django.views.generic import UpdateView
 from .forms import CustomUserCreationForm
 from .models import User
 
+from wallet.models import Wallet
+
 
 class UserListView(ListView):
     model = User
@@ -23,8 +25,11 @@ class UserView(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(User, pk=self.request.user.pk)
 
-    # def get_context_data(self, **kwargs):
-    #
+    def get_context_data(self, **kwargs):
+        context = super(UserView, self).get_context_data(**kwargs)
+        context['created_wallets'] = Wallet.objects.filter(author=self.request.user)
+        context['available_wallets'] = Wallet.objects.filter(members__exact=self.request.user)
+        return context
 
 
 class UserCreateView(CreateView):

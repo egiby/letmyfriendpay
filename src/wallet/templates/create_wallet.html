@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Create wallet{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {% load widget_tweaks %}
+                    <div class="form-group">
+                        <label for="Description">Description</label>
+                        {{ form.description|add_class:"form-control"|attr:"id:Description   " }}
+                    </div>
+                    <input type="submit" value="Create">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
