@@ -25,7 +25,6 @@ SECRET_KEY = '=wx33s=kjtcp8-76*ja^ie%-40_6o-=5vca*=a5ug%j25)2lj_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
 ALLOWED_HOSTS = []
 
 # User model definition

@@ -5,6 +5,8 @@ from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 
+from core.models import User
+from .forms import WalletEditForm
 from .models import Wallet, Balance
 
 
@@ -28,27 +30,51 @@ class WalletCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(WalletCreateView, self).form_valid(form)
-    #     for user in form.cleaned_data['members']:
-    #         balance = Balance()
-    #         balance.wallet = self.object
-    #         balance.member = user
-    #         balance.member_balance = 0.0
-    #         balance.save()
-    #     return response
 
     def get_success_url(self):
         return str(self.object.pk)
-
-    # success_url = reverse_lazy('users:user_profile')
 
 
 class WalletEditView(UpdateView):
     model = Wallet
     template_name = 'edit_wallet.html'
-    fields = ('description',)
+    fields = ('description', )
+
+    def dispatch(self, request, *args, **kwargs):
+        self.pk = int(kwargs['pk'])
+        return super(WalletEditView, self).dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-        return get_object_or_404(Wallet, author=self.request.user)
+        return get_object_or_404(Wallet, author=self.request.user, pk=self.pk)
 
     def get_success_url(self):
-        return str(self.object.pk)
+        return "/wallets/" + str(self.pk)
+
+
+class WalletAddMemberView(UpdateView):
+    template_name = 'add_member.html'
+
+    form_class = WalletEditForm
+
+    def dispatch(self, request, *args, **kwargs):
+        self.pk = int(kwargs['pk'])
+        return super(WalletAddMemberView, self).dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Wallet, author=self.request.user, pk=self.pk)
+
+    def form_valid(self, form):
+        response = super(WalletAddMemberView, self).form_valid(form)
+        if User.objects.filter(username=form.cleaned_data['new_member']):
+            user = User.objects.get(username=form.cleaned_data['new_member'])
+
+            balance = Balance()
+            balance.member = user
+            balance.wallet = self.object
+            balance.member_balance = 0.00
+            balance.save()
+
+        return response
+
+    def get_success_url(self):
+        return "/wallets/" + str(self.pk) + "/edit_wallet"
