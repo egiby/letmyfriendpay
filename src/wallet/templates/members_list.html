@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container" data-src="{% url 'wallets:balances' wallet.pk %}">
     <h3>Members</h3>
     {% for balance in wallet.balance_set.all %}
-        <li>{{ balance.member }}, balance={{ balance.member_balance }} </li>
+        <li>{{ balance.member }}, balance=<span class="member-balance_{{ balance.member_id }}">{{ balance.member_balance }}</span> </li>
     {% endfor %}
 </div>

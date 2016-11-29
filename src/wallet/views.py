@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView
 from django.views.generic import DetailView
@@ -84,4 +85,12 @@ class WalletAddMemberView(UpdateView):
         return response
 
     def get_success_url(self):
-        return "/wallets/" + str(self.pk) + "/edit_wallet"
+        return "/wallets/" + str(self.pk)
+
+
+class BalanceView(DetailView):
+    model = Wallet
+
+    def render_to_response(self, context, **response_kwargs):
+        data = dict(self.object.balance_set.all().values_list('member_id', 'member_balance'))
+        return JsonResponse(data)
