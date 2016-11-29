@@ -1,0 +1,6 @@
+<div class="container">
+    <h3>Members</h3>
+    {% for balance in wallet.balance_set.all %}
+        <li>{{ balance.member }}, balance={{ balance.member_balance }} </li>
+    {% endfor %}
+</div>

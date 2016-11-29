@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         {% if created_wallets %}
-{#                            <p>#}
+                            {#                            <p>#}
                             <div class="page-header">
                                 <h1>My wallets</h1>
                             </div>
@@ -20,21 +20,11 @@
                                 {% endfor %}
                             </ul>
 
-{#                            </p>#}
                         {% endif %}
-{#                        <p>#}
-                        <br>
-                            <a href="{% url 'wallets:create' %}">
-                                <button type="button" class="btn btn-default">
-                                    Create wallet
-                                </button>
-                            </a>
-                        <br>
                     </div>
 
                     <div class="col-md-6">
                         {% if available_wallets %}
-{#                            <p>#}
                             <div class="page-header">
                                 <h1>Available wallets</h1>
                             </div>
@@ -44,9 +34,15 @@
                                     <a class="list-group-item" href="/wallets/{{ wallet.pk }}">{{ wallet }}</a>
                                 {% endfor %}
                             </ul>
-{#                            </p>#}
                         {% endif %}
                     </div>
+                </div>
+                <div class="row">
+                    <a href="{% url 'wallets:create' %}">
+                        <button type="button" class="btn btn-default">
+                            Create wallet
+                        </button>
+                    </a>
                 </div>
             </div>
 
@@ -55,12 +51,10 @@
                     {% if user.avatar %}
                         <img src="{{ user.avatar.url }}", width="100px">
                     {% endif %}
-{#                    <ul class="list-group list-group-flush">#}
-                        <p>login: {{ user }}</p>
-                        <p>First name: {{ user.first_name }}</p>
-                        <p>Last name: {{ user.last_name }} </p>
-                        <p>e-mail: {{ user.email }} </p>
-{#                    </ul>#}
+                    <p>login: {{ user }}</p>
+                    <p>First name: {{ user.first_name }}</p>
+                    <p>Last name: {{ user.last_name }} </p>
+                    <p>e-mail: {{ user.email }} </p>
                 </div>
             </div>
         </div>

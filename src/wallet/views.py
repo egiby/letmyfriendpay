@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
@@ -29,7 +28,15 @@ class WalletCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super(WalletCreateView, self).form_valid(form)
+        response = super(WalletCreateView, self).form_valid(form)
+
+        balance = Balance()
+        balance.member = self.request.user
+        balance.wallet = self.object
+        balance.member_balance = 0.00
+        balance.save()
+
+        return response
 
     def get_success_url(self):
         return str(self.object.pk)
@@ -67,12 +74,12 @@ class WalletAddMemberView(UpdateView):
         response = super(WalletAddMemberView, self).form_valid(form)
         if User.objects.filter(username=form.cleaned_data['new_member']):
             user = User.objects.get(username=form.cleaned_data['new_member'])
-
-            balance = Balance()
-            balance.member = user
-            balance.wallet = self.object
-            balance.member_balance = 0.00
-            balance.save()
+            if not Balance.objects.filter(wallet=self.object, member=user):
+                balance = Balance()
+                balance.member = user
+                balance.wallet = self.object
+                balance.member_balance = 0.00
+                balance.save()
 
         return response
 
