@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
 
-# Create your views here.
+from .models import Payment
+
+
+class PaymentView(DetailView):
+    model = Payment
+    template_name = 'payment.html'
+    context_object_name = 'payment'

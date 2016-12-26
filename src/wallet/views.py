@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView
@@ -6,6 +7,8 @@ from django.views.generic import ListView
 from django.views.generic import UpdateView
 
 from core.models import User
+from payment.forms import PaymentCreateForm
+from payment.models import Payment, Transaction
 from .forms import WalletEditForm
 from .models import Wallet, Balance
 
@@ -16,10 +19,52 @@ class WalletListView(ListView):
     context_object_name = 'wallet_list'
 
 
-class WalletView(DetailView):
-    model = Wallet
+class WalletView(CreateView):
+    # model = Payment
     template_name = 'wallet.html'
-    context_object_name = 'wallet'
+    # context_object_name = 'wallet'
+    form_class = PaymentCreateForm
+
+    def dispatch(self, request, pk=None, *args, **kwargs):
+        self.wallet = get_object_or_404(Wallet.objects.filter(id=pk, balance__member__exact=self.request.user))
+        return super(WalletView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(WalletView, self).get_context_data(**kwargs)
+
+        context['payments'] = Payment.objects.filter(wallet=self.wallet)
+        context['wallet'] = self.wallet
+        return context
+
+    def form_valid(self, form):
+        if abs(form.instance.amount) < 3e-2:
+            return HttpResponseRedirect(self.get_success_url())
+
+        form.instance.creator = self.request.user
+        form.instance.wallet = self.wallet
+        response = super(WalletView, self).form_valid(form)
+
+        members = Balance.objects.filter(wallet=self.wallet)
+
+        for member in members:
+            transaction = Transaction()
+            transaction.user = member.member
+            transaction.payment = self.object
+            # currency? not in alpha version
+
+            # there will be error because of precision
+            transaction.difference = -self.object.amount / len(members)
+            if member.member == self.request.user:
+                transaction.difference += self.object.amount
+
+            transaction.save()
+            member.member_balance += transaction.difference
+            member.save()
+
+        return response
+
+    def get_success_url(self):
+        return '#'
 
 
 class WalletCreateView(CreateView):

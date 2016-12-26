@@ -21,6 +21,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^wallets/', include('wallet.urls', namespace='wallets')),
+    url(r'^payments/', include('payment.urls', namespace='payments')),
     url(r'^users/', include('core.urls', namespace='users')),
 ] \
               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {# title #}
+{#    <div class="container">#}
+        <p>{{ payment.creator }} {{ payment.amount }} {{ payment.currency }}</p>
+        {# details #}
+        {% for transaction in payment.transaction_set.all %}
+            <li>{{ transaction.user }} {{ transaction.difference }} </li>
+        {% endfor %}
+{#    </div>#}
+{% endblock %}
