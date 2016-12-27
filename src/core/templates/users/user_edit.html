@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% load widget_tweaks %}
 
@@ -20,17 +20,28 @@
                         {{ form.last_name|add_class:"form-control"|attr:"placeholder:Last name"|attr:"id:Lastname" }}
                     </div>
 
+                    {% if form.errors %}
+                        <div class="form-group">
+                            <label for="EmailAddress">Email address</label>
+                            {{ form.email|add_class:"form-control"|attr:"placeholder:Email address"|attr:"id:EmailAddress" }}
+                        </div>
+                        {{ form.errors.email }}
+                    {% else %}
+                        <div class="form-group">
+                            <label for="EmailAddress">Email address</label>
+                            {{ form.email|add_class:"form-control"|attr:"placeholder:Email address"|attr:"id:EmailAddress" }}
+                        </div>
+                    {% endif %}
+
                     <div class="form-group">
-                        <label for="EmailAddress">Email address</label>
-                        {{ form.email|add_class:"form-control"|attr:"placeholder:Email address"|attr:"id:EmailAddress" }}
+                        <label for="Avatar">Avatar</label>
+                        {{ form.avatar|add_class:"form-control-file"|attr:"id:Avatar" }}
                     </div>
 
-{#                    <div class="form-group">#}
-{#                        <label for="Avatar">Avatar</label>#}
-{#                        {{ form.avatar|add_class:"form-control-file"|attr:"id:Avatar" }}#}
-{#                    </div>#}
-
-                    <input type="submit" value="Save">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="{% url 'users:user_profile' %}">
+                        <button type="button" class="btn btn-secondary">Back</button>
+                    </a>
                 </form>
             </div>
         </div>

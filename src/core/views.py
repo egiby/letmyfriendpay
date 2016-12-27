@@ -6,7 +6,7 @@ from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserUpdateForm
 from .models import User
 
 from wallet.models import Wallet
@@ -39,11 +39,18 @@ class UserCreateView(CreateView):
 
 
 class UserUpdateView(UpdateView):
-    model = User
     template_name = 'users/user_edit.html'
-    fields = ('email', 'first_name', 'last_name', 'avatar')
+    form_class = CustomUserUpdateForm
 
     def get_object(self, queryset=None):
         return get_object_or_404(User, pk=self.request.user.pk)
+
+    def form_valid(self, form):
+        if 'avatar' in form.files:
+            form.instance.avatar = form.files['avatar']
+
+        response = super(UserUpdateView, self).form_valid(form)
+
+        return response
 
     success_url = reverse_lazy('users:user_profile')

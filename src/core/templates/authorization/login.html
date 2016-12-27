@@ -6,8 +6,6 @@
     {% if user.is_authenticated %}
         <meta http-equiv="refresh" content="1; URL='{% url 'users:user_profile' %}'" />
     {% endif %}
-    {# Да, это костыль #}
-    {# Не обращайте внимания #}
 {% endblock %}
 
 {% block content %}
@@ -15,11 +13,21 @@
         <div class="container">
             {% load widget_tweaks %}
             <form class="form-signin" role="form" method="post">
-                <h2 class="form-signin-heading">Please sign in</h2>
                 {% csrf_token %}
+                <h2 class="form-signin-heading">Please sign in</h2>
 
-                <p>{{ form.username|add_class:"form-control"|attr:"placeholder:Username"|attr:"required"|attr:"autofocus" }}</p>
-                <p>{{ form.password|add_class:"form-control"|attr:"placeholder:Password"|attr:"required" }}</p>
+{#                <p>{{ form.username|add_class:"form-control"|attr:"placeholder:Username"|attr:"required"|attr:"autofocus" }}</p>#}
+                <div class="form-group">
+                    {{ form.username|add_class:"form-control"|attr:"placeholder:Username"|attr:"required"|attr:"autofocus" }}
+                </div>
+{#                    <p>{{ form.password|add_class:"form-control"|attr:"placeholder:Password"|attr:"required" }}</p>#}
+
+                <div class="form-group">
+                    {{ form.password|add_class:"form-control"|attr:"placeholder:Password"|attr:"required" }}
+                </div>
+                {% if form.errors %}
+                    {{ form.non_field_errors }}
+                {% endif %}
                 <p><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></p>
                 <input type="hidden" name="next" value="{{ next }}" />
 

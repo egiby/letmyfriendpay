@@ -1,12 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'main.html' %}
 
 {% block content %}
-    {# title #}
-{#    <div class="container">#}
-        <p>{{ payment.creator }} {{ payment.amount }} {{ payment.currency }}</p>
-        {# details #}
-        {% for transaction in payment.transaction_set.all %}
-            <li>{{ transaction.user }} {{ transaction.difference }} </li>
-        {% endfor %}
-{#    </div>#}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <p>{{ payment.creator }} {{ payment.amount }} {{ payment.currency }}</p>
+                    {% for transaction in payment.transaction_set.all %}
+                        <li>{{ transaction.user }} {{ transaction.difference }} </li>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <a href="/wallets/{{ payment.wallet_id }}">
+                        <button type="button" class="btn btn-secondary">Back to wallet</button>
+                    </a>
+                    <a href="#">
+                        <button type="button" class="btn btn-primary">Edit payment</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

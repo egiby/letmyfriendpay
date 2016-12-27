@@ -20,9 +20,7 @@ class WalletListView(ListView):
 
 
 class WalletView(CreateView):
-    # model = Payment
     template_name = 'wallet.html'
-    # context_object_name = 'wallet'
     form_class = PaymentCreateForm
 
     def dispatch(self, request, pk=None, *args, **kwargs):
@@ -37,7 +35,7 @@ class WalletView(CreateView):
         return context
 
     def form_valid(self, form):
-        if abs(form.instance.amount) < 3e-2:
+        if form.instance.amount < 3e-2:
             return HttpResponseRedirect(self.get_success_url())
 
         form.instance.creator = self.request.user
