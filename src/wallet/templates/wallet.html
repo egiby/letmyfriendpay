@@ -40,7 +40,8 @@
                 <div class="row">
                     <div class="list-group">
                         {% for payment in payments %}
-                                <a class="list-group-item" href="/payments/{{ payment.pk }}">{{ payment.creator }} {{ payment.amount }} {{ payment.currency }}</a>
+{#                                <a class="list-group-item" href="/payments/{{ payment.pk }}">{{ payment.creator }} {{ payment.amount }} {{ payment.currency }}</a>#}
+                                <a class="list-group-item" href="/payments/{{ payment.pk }}">{{ payment.creator }} {{ payment.amount }}</a>
                         {% endfor %}
                     </div>
 

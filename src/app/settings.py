@@ -12,15 +12,19 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+from configparser import RawConfigParser
+
+config = RawConfigParser()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+config.read(os.path.join(BASE_DIR, '../django.conf'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=wx33s=kjtcp8-76*ja^ie%-40_6o-=5vca*=a5ug%j25)2lj_'
+SECRET_KEY = config.get('secrets', 'SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -91,6 +95,30 @@ DATABASES = {
     }
 }
 
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, '../debug.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'CRITICAL',
+            'propagate': True,
+        },
+        'wallet.views': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -123,12 +151,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/egiby/.letmyfriendpay/collected_static/'
-MEDIA_ROOT = '/home/egiby/.letmyfriendpay/media/'
-STATICFILES_DIRS = ('/home/egiby/.letmyfriendpay/src/static/', )
+STATIC_ROOT = os.path.join(BASE_DIR, '../collected_static/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '../media/')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'), )

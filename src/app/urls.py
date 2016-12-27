@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^wallets/', include('wallet.urls', namespace='wallets')),
     url(r'^payments/', include('payment.urls', namespace='payments')),
     url(r'^users/', include('core.urls', namespace='users')),
-    url(r'^$', RedirectView.as_view(url='/users/login', permanent=False))
+    url(r'^$', RedirectView.as_view(url='/users/profile', permanent=False))
 ] \
               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
               static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -13,6 +13,10 @@ from .forms import WalletEditForm
 from .models import Wallet, Balance
 
 
+import logging
+logger = logging.getLogger(__name__)
+
+
 class WalletListView(ListView):
     model = Wallet
     template_name = 'wallet_list.html'
@@ -50,7 +54,6 @@ class WalletView(CreateView):
             transaction.payment = self.object
             # currency? not in alpha version
 
-            # there will be error because of precision
             transaction.difference = -self.object.amount / len(members)
             if member.member == self.request.user:
                 transaction.difference += self.object.amount
@@ -73,6 +76,8 @@ class WalletCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         response = super(WalletCreateView, self).form_valid(form)
+
+        logger.debug(form.instance.description + " created by " + form.instance.author.username)
 
         balance = Balance()
         balance.member = self.request.user

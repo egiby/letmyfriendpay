@@ -5,10 +5,19 @@
 {% block content %}
     <div class="container">
         <form method="post">
-            {% csrf_token %}
-            {% load widget_tweaks %}
-            {{ form.as_p }}
-            <input type="submit" value="Save">
+            <div class="col-md-4">
+                {% csrf_token %}
+                {% load widget_tweaks %}
+                <div class="form-group">
+                    <label for="New_member">New member</label>
+                    {{ form.new_member|add_class:"form-control"|attr:"id:New_member"|attr:"placeholder:login" }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add</button>
+                <a href="/wallets/{{ wallet.pk }}">
+                    <button type="button" class="btn btn-secondary">Back</button>
+                </a>
+            </div>
         </form>
     </div>
 {% endblock %}

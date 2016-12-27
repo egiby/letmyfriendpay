@@ -5,12 +5,18 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <form method="post">
                     {% csrf_token %}
                     {% load widget_tweaks %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Save">
+                    <div class="form-group">
+                        <label for="Description">Description</label>
+                        {{ form.description|add_class:"form-control"|attr:"id:Description" }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/wallets/{{ wallet.pk }}">
+                        <button type="button" class="btn btn-secondary">Back</button>
+                    </a>
                 </form>
             </div>
         </div>

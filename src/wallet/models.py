@@ -14,9 +14,6 @@ class Wallet(models.Model):
     def __str__(self):
         return self.description
 
-    # def get_balance(self, member):
-    #     return Balance.objects.get(wallet=self, member=member)
-
 
 class Balance(models.Model):
     wallet = models.ForeignKey(Wallet)

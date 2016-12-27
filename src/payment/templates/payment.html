@@ -5,7 +5,8 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="row">
-                    <p>{{ payment.creator }} {{ payment.amount }} {{ payment.currency }}</p>
+{#                    <p>{{ payment.creator }} {{ payment.amount }} {{ payment.currency }}</p>#}
+                    <p>{{ payment.creator }} {{ payment.amount }}</p>
                     {% for transaction in payment.transaction_set.all %}
                         <li>{{ transaction.user }} {{ transaction.difference }} </li>
                     {% endfor %}
